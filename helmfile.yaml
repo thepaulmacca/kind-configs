@@ -1,0 +1,36 @@
+repositories:
+  - name: descheduler
+    url: https://kubernetes-sigs.github.io/descheduler/
+  - name: fairwinds-stable
+    url: https://charts.fairwinds.com/stable
+  - name: kedacore
+    url: https://kedacore.github.io/charts
+  - name: metrics-server
+    url: https://kubernetes-sigs.github.io/metrics-server/
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+
+releases:
+  - name: descheduler
+    namespace: kube-system
+    chart: descheduler/descheduler
+  - name: goldilocks
+    namespace: goldilocks
+    chart: fairwinds-stable/goldilocks
+  - name: keda
+    namespace: keda
+    chart: kedacore/keda
+  - name: kube-prometheus-stack
+    namespace: monitoring
+    chart: prometheus-community/kube-prometheus-stack
+    disableValidationOnInstall: true # temp fix for https://github.com/helmfile/helmfile/issues/763
+  - name: metrics-server
+    namespace: kube-system
+    chart: metrics-server/metrics-server
+    set:
+    - name: args
+      values:
+      - '--kubelet-insecure-tls'
+  - name: vpa
+    namespace: vpa
+    chart: fairwinds-stable/vpa
